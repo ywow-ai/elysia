@@ -1,0 +1,14 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore build outputs
+**/out
+**/dist
+**/build
+
+# Ignore Prisma generated
+**/generated
+
+# Ignore dependencies
+**/node_modules
