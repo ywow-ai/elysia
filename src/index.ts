@@ -19,15 +19,6 @@ const v1 = new Elysia({ prefix: "/api/v1" })
   })
   .get("/xx", () => {
     return { url: "/xx" };
-  })
-  .get("/aa", () => {
-    return { url: "/aa" };
-  })
-  .get("/ss", () => {
-    return { url: "/ss" };
-  })
-  .get("/ss", () => {
-    return { url: "/ss" };
   });
 
 const filesApi = new Elysia()
