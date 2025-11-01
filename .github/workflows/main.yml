@@ -1,26 +1,34 @@
-# .github/workflows/deploy.yml
+# .github/workflows/main.yml
 name: Deploy main via SSH
+run: |
+  mkdir -p ~/.ssh
+  echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+  chmod 600 ~/.ssh/id_rsa
+  ssh -o StrictHostKeyChecking=no \
+    -i ~/.ssh/id_rsa \
+    ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} \
+    "chmod +x ~/elysia/deploy.sh && bash ~/elysia/deploy.sh"
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Run deploy script via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            chmod +x ~/elysia/deploy.sh
-            bash ~/elysia/deploy.sh
+#       - name: Run deploy script via SSH
+#         uses: appleboy/ssh-action@v1
+#         with:
+#           host: ${{ secrets.SSH_HOST }}
+#           username: ${{ secrets.SSH_USER }}
+#           key: ${{ secrets.SSH_KEY }}
+#           port: ${{ secrets.SSH_PORT }}
+#           script: |
+#             chmod +x ~/elysia/deploy.sh
+#             bash ~/elysia/deploy.sh
