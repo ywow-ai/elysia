@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -euo pipefail
 
 HOME=/home/mis-stage
 BUN=$HOME/.bun/bin/bun
@@ -7,15 +7,22 @@ BUNX=$HOME/.bun/bin/bunx
 APP_DIR=$HOME/elysia
 ENV_FILE=$APP_DIR/.env
 
+GET_ENV() {
+    local KEY="$1"
+    grep "^${KEY}=" "$ENV_FILE" | cut -d '=' -f2-
+}
+
 if [ -f "$ENV_FILE" ]; then
-    PORT=$(grep PORT "$ENV_FILE" | cut -d '=' -f2)
-    
-    if [ -z "$PORT" ]; then
-        echo "Error: PORT not found in .env"
-        exit 1
-    fi
+    for key in PORT; do
+        value=$(GET_ENV "$key")
+        if [ -z "$value" ]; then
+            echo "Error: $key not found in $ENV_FILE"
+            exit 1
+        fi
+        eval "${key}=\"$value\""
+    done
 else
-    echo "Error: .env file not found at $ENV_FILE"
+    echo "Error: .env file not found at $APP_DIR"
     exit 1
 fi
 
