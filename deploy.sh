@@ -8,8 +8,8 @@ APP_DIR=$HOME/elysia
 ENV_FILE=$APP_DIR/.env
 
 GET_ENV() {
-    local KEY="$1"
-    grep "^${KEY}=" "$ENV_FILE" | cut -d '=' -f2-
+    local key="$1"
+    grep -F "^${key}=" "$ENV_FILE" | cut -d '=' -f2-
 }
 
 if [ -f "$ENV_FILE" ]; then

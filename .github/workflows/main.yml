@@ -1,5 +1,5 @@
 # .github/workflows/deploy.yml
-name: Deploy via SSH
+name: Deploy main via SSH
 
 on:
   push:
