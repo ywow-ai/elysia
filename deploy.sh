@@ -42,15 +42,13 @@ echo "Building application..."
 "$BUN" run build
 
 echo "Starting server..."
-mkdir -p "$APP_DIR/logs"
-nohup "$BUNX" dotenv -e "$ENV_FILE" -- "$BUN" run serve > "$APP_DIR/logs/server.log" 2>&1 &
+nohup "$BUNX" dotenv -e "$ENV_FILE" -- "$BUN" run serve > /dev/null 2>&1 &
 sleep 3
 
 echo "Checking if server is running..."
 if ps aux | grep "$BUN run serve" | grep -v grep > /dev/null; then
     echo "Deployment completed! Server is running."
-    echo "Logs available at: $APP_DIR/logs/server.log"
 else
-    echo "Server failed to start. Check logs: $APP_DIR/logs/server.log"
+    echo "Server failed to start."
     exit 1
 fi
