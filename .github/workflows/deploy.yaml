@@ -23,4 +23,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             chmod +x ~/elysia/deploy.sh
-            ~/elysia/deploy.sh
+            bash ~/elysia/deploy.sh
