@@ -19,11 +19,11 @@ jobs:
           SSH_PORT: ${{ vars.SSH_PORT }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "$SSH_KEY" > ~/.ssh/id_rsa_elysia
+          chmod 600 ~/.ssh/id_rsa_elysia
 
           ssh -o StrictHostKeyChecking=no \
-              -i ~/.ssh/id_rsa \
+              -i ~/.ssh/id_rsa_elysia \
               -p "$SSH_PORT" \
               "$SSH_USER@$SSH_HOST" \
               "chmod +x ~/elysia/deploy.sh && bash ~/elysia/deploy.sh"
